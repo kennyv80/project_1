@@ -11,7 +11,6 @@ var firebaseConfig = {
 
   
   var database = firebase.database();
-document.getElementsByClassName(".form-control").addEventListener("click", displaySeating);
 function displaySeating (team){
 console.log (team)
 }
@@ -24,11 +23,28 @@ console.log (team)
       var password = $("#inputPassword4").val().trim();
       var address = $("#inputAddress").val().trim();
       var city = $("#inputCity").val().trim();
+      var state = $("#inputState").val().trim();
+      console.log(state);
+      var zip = $("#inputZip").val().trim();
+      
+      var team = $(".team option:selected").val();
+      var user={
+        email:email, 
+        password:password,
+        address:address,
+        city:city,
+        state:state,
+        zip:zip,
+        team:team,
+
+      }
+      database.ref('/users').push(user);
       // Console log each of the user inputs to confirm we are receiving them
       console.log(email);
       console.log(password);
       console.log(address);
       console.log(city);
+  
       // Replaces the content in the "recent-member" div with the new info
       $("#email-display").text(email);
       $("#password-display").text(password);
@@ -42,6 +58,7 @@ console.log (team)
       sessionStorage.setItem("address", address);
       sessionStorage.setItem("city", city);
     });
+
     // By default display the content from sessionStorage
     $("#email-display").text(sessionStorage.getItem("email"));
     $("#password-display").text(sessionStorage.getItem("password"));
@@ -59,7 +76,7 @@ function displaySeating (){
     $(".seatImg").attr("src", img);
 }   
 function tickets(){
-    window.location="./index.html"
+    //window.location="./index.html"
 }
 
 
