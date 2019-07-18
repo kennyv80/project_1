@@ -1,6 +1,10 @@
-$( document ).ready(function() {
+$(document).ready(function() { 
+
     $('#submit-btn').on('click', function() {
         console.log('test');
+        
+    var firebase = require('firebase');
+    var firebaseui = require('firebaseui');    
 //var form = $(".form-signin");
 //form.validate()
 //$('#submit-btn').on('click', function() {
