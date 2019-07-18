@@ -42,7 +42,6 @@ console.log (team)
       database.ref('/users').push(user);
       // Console log each of the user inputs to confirm we are receiving them
       console.log(email);
-      console.log(password);
       console.log(address);
       console.log(city);
   
@@ -55,7 +54,6 @@ console.log (team)
       sessionStorage.clear();
       // Store all content into sessionStorage
       sessionStorage.setItem("email", email);
-      sessionStorage.setItem("password", password);
       sessionStorage.setItem("address", address);
       sessionStorage.setItem("city", city);
     });
