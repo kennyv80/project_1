@@ -55,7 +55,6 @@ console.log (team)
       sessionStorage.clear();
       // Store all content into sessionStorage
       sessionStorage.setItem("email", email);
-      sessionStorage.setItem("password", password);
       sessionStorage.setItem("address", address);
       sessionStorage.setItem("city", city);
     });
