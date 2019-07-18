@@ -60,7 +60,7 @@ console.log (team)
 
     // By default display the content from sessionStorage
     $("#email-display").text(sessionStorage.getItem("email"));
-    $("#password-display").text(sessionStorage.getItem("password"));
+
     $("#address-display").text(sessionStorage.getItem("address"));
     $("#city-display").text(sessionStorage.getItem("city"));
     
