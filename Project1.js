@@ -42,7 +42,7 @@ console.log (team)
       database.ref('/users').push(user);
       // Console log each of the user inputs to confirm we are receiving them
       console.log(email);
-      console.log(password);
+      
       console.log(address);
       console.log(city);
   
@@ -62,7 +62,7 @@ console.log (team)
 
     // By default display the content from sessionStorage
     $("#email-display").text(sessionStorage.getItem("email"));
-    $("#password-display").text(sessionStorage.getItem("password"));
+   
     $("#address-display").text(sessionStorage.getItem("address"));
     $("#city-display").text(sessionStorage.getItem("city"));
     
