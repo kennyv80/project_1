@@ -15,11 +15,9 @@ var firebaseConfig = {
 function displaySeating (team){
 console.log (team)
 }
-    // Capture Button Click
-    // $("#add-user").on("click", function(event) {
     
     // on resolution of submit from form ID "user-signup"
-    $("#user-signup").submit(function(event) {                                  //
+    $("#user-signup").submit(function(event) {                                
 
       var testingv = validateEntry(event);
       if(testingv === false) {
@@ -37,9 +35,6 @@ console.log (team)
       var state = $("#inputState").val().trim();
       var zip = $("#inputZip").val().trim();
       var team = $(".team option:selected").val();
-
-      // if (validateEmail(email)) {                                            // tom
-
         
         localStorage.setItem("team", team)
         var user={
@@ -68,7 +63,6 @@ console.log (team)
         sessionStorage.setItem("email", email);
         sessionStorage.setItem("address", address);
         sessionStorage.setItem("city", city);
-      // }                                                                      // tom      
     });
 
     // By default display the content from sessionStorage
@@ -93,65 +87,25 @@ function tickets(){
     //window.location="./index.html"
 }
 
-//------------------------------------------------------------------------
-// sign form validation
-// function validateEmail(email) {             // tom
-//   if (email.length === 0) {                 //
-//     var alert = $("<div>");                 //
-//     alert.css({"color":"red", "font-size":"15px"});   // font-size: 18px
-//     alert.text("Entry is blank.");          //
-//     $("#invalidation").append(alert);      // inputEmail4Errors
-//     return false;                           //
-//   }                                         //
-//   return true;                              //
-// }                                           //
 
 function validateEntry(event) {
-
-  // console.log(event); //db
-  // console.log("validateEntry"); //db
-  var email = $("#inputEmail4").val().trim();
-  var password = $("#inputPassword4").val().trim();
-  var address = $("#inputAddress").val().trim();
-  var city = $("#inputCity").val().trim();
-  var zip = $("#inputZip").val().trim();
   var msg;
 
-  // need array to index specific validation per user entries
-  var inputs = [email, password, address, city, zip]; 
-
-                                    // arg a & b, could be index & current_input_object, respectively  
   $($('form').prop('elements')).each(function(index){
     var stateSelected = $("#inputState").val().trim();
     var teamSelected = $("#inputTeam").val().trim();
   
-    //  || teamSelected === "Team" || stateSelected === "State"
-    // console.log(index);
-    // console.log($(this).val());
-    // console.log($(this).text());
-    // console.log($(this));
-
+    // compared input if entry is blank
     if($(this).val() === "" || stateSelected === "State" || teamSelected === "Team") {
-
       // code: that would link current element to output validation text
       msg = "Entry is blank";
       invalidationText(msg, $(this));
-
     }
-
-    // console.log("--" + $(this).val())  //db
-    console.info(this)  //db
   });
-
-
-
-
-
   return true;
 }
 
-
-
+// to inject msg to the DOM
 function invalidationText(msg, atCurrent) {
   var invalidText = $("<div>");
   invalidText.text(msg);
