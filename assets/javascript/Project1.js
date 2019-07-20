@@ -13,8 +13,11 @@ var firebaseConfig = {
   
   var database = firebase.database();
 function displaySeating (team){
-console.log (team)
-}    
+// console.log (team)
+}
+    // Capture Button Click
+    // $("#add-user").on("click", function(event) {
+    
     // on resolution of submit from form ID "user-signup"
     $("#user-signup").submit(function(event) {                                  //
 
@@ -22,6 +25,8 @@ console.log (team)
       if(testingv === false) {
         return false;
       }
+
+      // console.log(event); //db
       // prevent page from refreshing when form tries to submit itself
       event.preventDefault();
       // Capture user inputs and store them into variables
@@ -32,6 +37,9 @@ console.log (team)
       var state = $("#inputState").val().trim();
       var zip = $("#inputZip").val().trim();
       var team = $(".team option:selected").val();
+
+      // if (validateEmail(email)) {                                            // tom
+
         
         localStorage.setItem("team", team)
         var user={
@@ -60,12 +68,14 @@ console.log (team)
         sessionStorage.setItem("email", email);
         sessionStorage.setItem("address", address);
         sessionStorage.setItem("city", city);
+      // }                                                                      // tom      
     });
 
     // By default display the content from sessionStorage
     $("#email-display").text(sessionStorage.getItem("email"));
     $("#address-display").text(sessionStorage.getItem("address"));
     $("#city-display").text(sessionStorage.getItem("city"));
+    
 
 //click event on submission, on click call your function displaySeating
 $("#add-user").click(displaySeating);
@@ -98,8 +108,9 @@ function tickets(){
 
 function validateEntry(event) {
 
+
   // console.log(event); //db
-  // console.log("validateEntry"); //db
+  // console.log("above is validateEntry"); //db
   var email = $("#inputEmail4").val().trim();
   var password = $("#inputPassword4").val().trim();
   var address = $("#inputAddress").val().trim();
@@ -111,28 +122,59 @@ function validateEntry(event) {
   var inputs = [email, password, address, city, zip]; 
 
                                     // arg a & b, could be index & current_input_object, respectively  
-  $($('form').prop('elements')).each(function(index){
     var stateSelected = $("#inputState").val().trim();
     var teamSelected = $("#inputTeam").val().trim();
   
-    //  || teamSelected === "Team" || stateSelected === "State"
-    // console.log(index);
-    // console.log($(this).val());
-    // console.log($(this).text());
-    // console.log($(this));
 
-    if($(this).val() === "" || stateSelected === "State" || teamSelected === "Team") {
-      // code: that would link current element to output validation text
-      msg = "Entry is blank";
-      invalidationText(msg, $(this));
+  // - curEl is current element, but curEl.val() would give you 405 error, da_hell!
+  // index is same old integer index
+  $($('form').prop('elements')).each(function(index, curEl){
+
+    // console.log(curEl.val());                                          
+    // console.log($(this).val());                   // $(this).val() is value of inputs
+    // about line below: $(this).get() result in a string that
+    // defined this element, meaning its element's [tag, id, class]
+    // console.log($(this).get());                   
+    // console.log("^ above is " + index);
+
+    // testing State
+    if(index === 4) {
+      if($(this).val() === "State") {
+        // console.log("state not entered");
+        msg = "afaeradf";
+        invalidationText(msg,  $(this).get());
+      } 
     }
-    // console.log("--" + $(this).val())  //db
-    console.info(this)  //db
+
+    // if(index === 6) {
+    //   if($(this).val() === "Team") {
+    //     // console.log("Team not entered");
+    //     msg = "afaeradf";
+
+    //   } 
+    // }
+
+
+    // console.log($(this));                         // $(this) is the current DOM element
+    // console.log("^ $this");
+    // console.info(this);                           // non-descriptive, check it out
   });
 
 
+    // if(stateSelected === "State") {
+    //   // code: that would link current element to output validation text
+    //   msg = "Entry is blank";
+    //   invalidationText(msg, stateSelected);
+    // }
 
+    // if(teamSelected === "Team") {
+    //   // code: that would link current element to output validation text
+    //   msg = "Entry is blank";
+    //   invalidationText(msg, teamSelected);
+    // }
 
+    // console.log($(this));  //db
+    // console.info(this)  //db
 
   return true;
 }
@@ -140,10 +182,13 @@ function validateEntry(event) {
 
 
 function invalidationText(msg, atCurrent) {
+
+  // console.log($(atCurrent));
+  // console.log(atCurrent);
   var invalidText = $("<div>");
   invalidText.text(msg);
   invalidText.css({"color":"red", "font-size":"15px"});
-  $(atCurrent).next().append(invalidText);
+  $($(atCurrent)).next().append(invalidText);
 }
 
 
