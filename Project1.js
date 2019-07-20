@@ -21,21 +21,21 @@ console.log (team)
       // Capture user inputs and store them into variables
       var email = $("#inputEmail4").val().trim();
       var password = $("#inputPassword4").val().trim();
-      var address = $("#inputAddress").val().trim();
-      var city = $("#inputCity").val().trim();
-      var state = $("#inputState").val().trim();
-      console.log(state);
-      var zip = $("#inputZip").val().trim();
+      // var address = $("#inputAddress").val().trim();
+      // var city = $("#inputCity").val().trim();
+      // var state = $("#inputState").val().trim();
+      // console.log(state);
+      // var zip = $("#inputZip").val().trim();
       
       var team = $(".team option:selected").val();
       localStorage.setItem("team", team)
       var user={
         email:email, 
         password:password,
-        address:address,
-        city:city,
-        state:state,
-        zip:zip,
+        // address:address,
+        // city:city,
+        // state:state,
+        // zip:zip,
         team:team,
 
       }
@@ -43,28 +43,27 @@ console.log (team)
       // Console log each of the user inputs to confirm we are receiving them
       console.log(email);
       
-      console.log(address);
-      console.log(city);
+      // console.log(address);
+      // console.log(city);
   
       // Replaces the content in the "recent-member" div with the new info
       $("#email-display").text(email);
       $("#password-display").text(password);
-      $("#address-display").text(address);
-      $("#city-display").text(city);
+      // $("#address-display").text(address);
+      // $("#city-display").text(city);
       // Clear sessionStorage
       sessionStorage.clear();
       // Store all content into sessionStorage
       sessionStorage.setItem("email", email);
-      sessionStorage.setItem("password", password);
-      sessionStorage.setItem("address", address);
-      sessionStorage.setItem("city", city);
+      // sessionStorage.setItem("address", address);
+      // sessionStorage.setItem("city", city);
     });
 
     // By default display the content from sessionStorage
     $("#email-display").text(sessionStorage.getItem("email"));
    
-    $("#address-display").text(sessionStorage.getItem("address"));
-    $("#city-display").text(sessionStorage.getItem("city"));
+    // $("#address-display").text(sessionStorage.getItem("address"));
+    // $("#city-display").text(sessionStorage.getItem("city"));
     
 
 
@@ -77,7 +76,7 @@ function displaySeating (){
     $(".seatImg").attr("src", img);
 }   
 function tickets(){
-    //window.location="./index.html"
+    // window.location="./login.html"
 }
 
 
