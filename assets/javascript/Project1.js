@@ -93,79 +93,45 @@ function tickets(){
     //window.location="./index.html"
 }
 
-//------------------------------------------------------------------------
-// sign form validation
-// function validateEmail(email) {             // tom
-//   if (email.length === 0) {                 //
-//     var alert = $("<div>");                 //
-//     alert.css({"color":"red", "font-size":"15px"});   // font-size: 18px
-//     alert.text("Entry is blank.");          //
-//     $("#invalidation").append(alert);      // inputEmail4Errors
-//     return false;                           //
-//   }                                         //
-//   return true;                              //
-// }                                           //
 
 function validateEntry(event) {
 
 
-  // console.log(event); //db
-  // console.log("above is validateEntry"); //db
-  var email = $("#inputEmail4").val().trim();
-  var password = $("#inputPassword4").val().trim();
-  var address = $("#inputAddress").val().trim();
-  var city = $("#inputCity").val().trim();
-  var zip = $("#inputZip").val().trim();
-  var msg;
+  $(".invalidation").empty();
 
-  // need array to index specific validation per user entries
-  var inputs = [email, password, address, city, zip]; 
-
-                                    // arg a & b, could be index & current_input_object, respectively  
-    var stateSelected = $("#inputState").val().trim();
-    var teamSelected = $("#inputTeam").val().trim();
+  var invalMsg = "Invalid entry";
   
 
-  // - curEl is current element, but curEl.val() would give you 405 error, da_hell!
-  // index is same old integer index
   $($('form').prop('elements')).each(function(index, curEl){
 
-    // console.log(curEl.val());                                          
-    // console.log($(this).val());                   // $(this).val() is value of inputs
-    // about line below: $(this).get() result in a string that
-    // defined this element, meaning its element's [tag, id, class]
-    // console.log($(this).get());                   
-    // console.log("^ above is " + index);
 
-    // testing State
+
+
+    // testing state input
     if(index === 4) {
       if($(this).val() === "State") {
-        // console.log("state not entered");
-        msg = "afaeradf";
-        invalidationText(msg,  $(this).get());
+        invalidationText(invalMsg,  $(this).get());
       } 
     }
 
-    // if(index === 6) {
-    //   if($(this).val() === "Team") {
-    //     // console.log("Team not entered");
-    //     msg = "afaeradf";
+    // testing zip input
+    if(index === 5) {
+      var temp = evalZip($(this).val());
+      if(temp == false) {
+        invalidationText(invalMsg,  $(this).get());
+      } 
+    }
 
-    //   } 
-    // }
+    // testing team input
+    if(index === 6) {
+      if($(this).val() === "Team") {
+        msg = "afaeradf";
+        invalidationText(invalMsg,  $(this).get());
+      } 
+    }
 
-
-    // console.log($(this));                         // $(this) is the current DOM element
-    // console.log("^ $this");
-    // console.info(this);                           // non-descriptive, check it out
   });
 
-
-    // if(stateSelected === "State") {
-    //   // code: that would link current element to output validation text
-    //   msg = "Entry is blank";
-    //   invalidationText(msg, stateSelected);
-    // }
 
     // if(teamSelected === "Team") {
     //   // code: that would link current element to output validation text
@@ -173,22 +139,30 @@ function validateEntry(event) {
     //   invalidationText(msg, teamSelected);
     // }
 
-    // console.log($(this));  //db
-    // console.info(this)  //db
-
   return true;
 }
 
 
-
+// injecting invalidation msg into DOM
 function invalidationText(msg, atCurrent) {
-
-  // console.log($(atCurrent));
-  // console.log(atCurrent);
   var invalidText = $("<div>");
   invalidText.text(msg);
   invalidText.css({"color":"red", "font-size":"15px"});
   $($(atCurrent)).next().append(invalidText);
+}
+
+// validating zip criteria:
+// only numerical digits, five digits len
+function evalZip(inputs) {
+  // search criteria: any non-digits
+  var patternz = /[^0-9]/;
+  var result = inputs.match(patternz);
+        // 5-digits length
+  if(result === null && inputs.length === 5) {
+    return  true;
+  } else {
+    return false;
+  }
 }
 
 
