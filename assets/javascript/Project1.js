@@ -75,7 +75,7 @@ function displaySeating (){
     $(".seatImg").attr("src", img);
 }   
 function tickets(){
-    //window.location="./index.html"
+    // window.location="./login.html"
 }
 
 
