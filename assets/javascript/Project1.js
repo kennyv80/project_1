@@ -97,15 +97,50 @@ function tickets(){
 function validateEntry(event) {
 
 
+  // clear previous invalidation msg
   $(".invalidation").empty();
 
   var invalMsg = "Invalid entry";
   
 
-  $($('form').prop('elements')).each(function(index, curEl){
 
+  $($('form').prop('elements')).each(function(index){
 
+    var tallies = 0;                       // counter of fail validations
 
+    // testing email input
+    if(index === 0) {
+      var email = eValid($(this).val());    
+      if(email == false || $(this).val().length === 0) {  // 2nd if arg is if 
+                                                          // user inputs empty
+        invalidationText(invalMsg, $(this).get());
+      }
+    }
+
+    // testing password input
+    if(index === 1) {
+      var invalPMsg = "Need a cap letter and a number";   // custom pw req. msg
+      var pw = evalPw($(this).val());                     // for passwords
+      console.log($(this).val());  // for debugging
+      if(pw ==  false) {
+        invalidationText(invalPMsg, $(this).get());
+      }
+    }
+
+    // testing address input
+    if(index === 2) {
+      if($(this).val().length === 0) {
+        invalidationText(invalMsg,  $(this).get());
+      } 
+    }  
+
+    // testing city input
+    if(index === 3) {
+      var city = evalCity($(this).val());
+      if(city == false) {
+        invalidationText(invalMsg,  $(this).get());
+      }
+    }
 
     // testing state input
     if(index === 4) {
@@ -116,8 +151,8 @@ function validateEntry(event) {
 
     // testing zip input
     if(index === 5) {
-      var temp = evalZip($(this).val());
-      if(temp == false) {
+      var zip = evalZip($(this).val());
+      if(zip == false) {
         invalidationText(invalMsg,  $(this).get());
       } 
     }
@@ -130,14 +165,14 @@ function validateEntry(event) {
       } 
     }
 
+    // tallies of zero means no fail validation
+    if(tallies === 0) {
+      return true;
+    } else {
+      return false;
+    }
+
   });
-
-
-    // if(teamSelected === "Team") {
-    //   // code: that would link current element to output validation text
-    //   msg = "Entry is blank";
-    //   invalidationText(msg, teamSelected);
-    // }
 
   return true;
 }
@@ -149,6 +184,82 @@ function invalidationText(msg, atCurrent) {
   invalidText.text(msg);
   invalidText.css({"color":"red", "font-size":"15px"});
   $($(atCurrent)).next().append(invalidText);
+}
+
+// validate email string, criteria for an valid email are as follow:
+// - has a at character '@'
+// - one of the common Top-Level Domain (TLD) name
+// - '@' must be before TLD name
+function eValid(argz) {
+
+                  // common TLD name .gov .edu .info .com .net .org
+  var patternz = [ /[@]/g, /com\b/i, /edu\b/i, /gov\b/i, 
+                        /info\b/i, /net\b/i, /org\b/i ];
+  var ind = [];   // index0 of '@' and index1 of TLD name
+                  // on email string
+  
+  for(var i = 0; i < 7; i++) {
+
+    if( i === 0
+        && argz.match(patternz[i]) !== null       // '@' exist          
+        && argz.match(patternz[i]).length < 2) {  // only one in string
+
+      // argz.match(patternz[i])[0] is '@'
+      // ind[0] now has the placement value of '@' on email string
+      ind.push(argz.indexOf(argz.match(patternz[i])[0]));
+    }
+
+    // latch on when a TLD matched
+    if( i > 0 && argz.match(patternz[i]) !== null) {
+
+      // argz.match(patternz[i])[0] is TLD without char '.'
+      // backtrack to locate index of '.'
+      // then push it onto ind[1] if a period actualy exist
+      var temp = argz.length - argz.match(patternz[i])[0].length;
+
+      if(argz[temp - 1] === '.') {
+        ind.push(temp-1);
+
+        // zero for the case of email that is:
+        // blahblah@.com
+        if((ind[1] - ind[0]) > 0) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
+
+
+// validating password criteria:
+// contains a cap letter and a number, and entry not blank
+function evalPw(inputs) {
+  var upper = /[A-Z]/g;     // caps search
+  var num = /[0-9]/g;       // numericals search
+  var upperR = inputs.match(upper);             // caps search results
+  var numR = inputs.match(num);                 // numericals search results
+
+  if(upperR !== null && numR !== null && inputs.length !== 0 ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+// validating city criteria:
+// no number in name
+function evalCity(inputs) {
+                 // searching for numbers
+  var patternz = /[0-9]/g;
+  var result = inputs.match(patternz);
+
+  // no numerical digits found
+  if(result !== null || inputs.length === 0) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 // validating zip criteria:
